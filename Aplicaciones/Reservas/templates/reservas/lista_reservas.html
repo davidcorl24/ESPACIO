@@ -1,0 +1,20 @@
+<!-- reservas/templates/reservas/lista_reservas.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva de Espacios de Estudio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.css" rel="stylesheet">
+</head>
+<body>
+    <h1>Espacios de Estudio Disponibles</h1>
+    <ul>
+        {% for espacio in espacios %}
+        <li>
+            <a href="{% url 'calendario' espacio.id %}">{{ espacio.nombre }} - {{ espacio.ubicacion }} (Capacidad: {{ espacio.capacidad }})</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

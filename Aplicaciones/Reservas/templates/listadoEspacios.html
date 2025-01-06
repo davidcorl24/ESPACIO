@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Espacios de Estudio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 20px 0;
+            color: #4a90e2;
+        }
+
+        .search-container {
+            width: 90%;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .search-container input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #dfe6e9;
+            border-radius: 5px;
+        }
+
+        .search-container button {
+            width: 15%;
+            padding: 10px;
+            background-color: #2980b9;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: #3498db;
+        }
+
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #4a90e2;
+            color: white;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        tr:hover {
+            background: #f1f1f1;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        button[type="submit"] {
+            background: #e74c3c;
+            color: white;
+        }
+
+        button[type="submit"]:hover {
+            background: #c0392b;
+        }
+
+        button[type="button"] {
+            background: #2ecc71;
+            color: white;
+        }
+
+        button[type="button"]:hover {
+            background: #27ae60;
+        }
+
+        a button {
+            text-decoration: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a[href="/nuevoEspacioestudio/"] button {
+            display: block;
+            margin: 20px auto;
+            background: #3498db;
+            color: white;
+        }
+
+        a[href="/nuevoEspacioestudio/"] button:hover {
+            background: #2980b9;
+        }
+
+        td[colspan="8"] {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-to-top:hover {
+            background: #357ABD;
+        }
+
+        .back-to-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-to-home:hover {
+            background: #357ABD;
+        }
+
+        @media (max-width: 768px) {
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            button {
+                font-size: 12px;
+            }
+
+            .back-to-top, .back-to-home {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-to-home" id="back_to_home" title="Volver">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <h2>Listado de Espacios de Estudio</h2>
+
+    <!-- Formulario de búsqueda -->
+    <div class="search-container">
+        <input type="text" id="search_input" placeholder="Buscar por nombre, ubicación...">
+        <button id="search_button"><i class="fas fa-search icon"></i>Buscar</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Ubicación</th>
+                <th>Capacidad</th>
+                <th>Descripción</th>
+                <th>Disponible</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="espacios_table_body">
+            {% for espacio in espacios %}
+            <tr>
+                <td>{{ espacio.id }}</td>
+                <td>{{ espacio.nombre }}</td>
+                <td>{{ espacio.apellido }}</td>
+                <td>{{ espacio.ubicacion }}</td>
+                <td>{{ espacio.capacidad }}</td>
+                <td>{{ espacio.descripcion }}</td>
+                <td>{{ espacio.disponible }}</td>
+                <td class="actions">
+                    <form action="/eliminarEspacioestudio/{{ espacio.id }}/" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" onclick="return confirm('¿Está seguro de que desea eliminar este espacio?')">
+                            <i class="fas fa-trash icon"></i>Eliminar
+                        </button>
+                    </form>
+                    <a href="/editarEspaciosestudio/{{ espacio.id }}/">
+                        <button type="button">
+                            <i class="fas fa-edit icon"></i>Editar
+                        </button>
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8">No hay espacios de estudio registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+    <a href="/nuevoEspacioestudio/">
+        <button type="button">
+            <i class="fas fa-plus icon"></i>Agregar Nuevo Espacio
+        </button>
+    </a>
+
+    <script>
+        // Función para realizar la búsqueda en la tabla
+        document.getElementById('search_button').addEventListener('click', function() {
+            const query = document.getElementById('search_input').value.toLowerCase();
+            const rows = document.querySelectorAll('#espacios_table_body tr');
+            
+            rows.forEach(function(row) {
+                const columns = row.querySelectorAll('td');
+                let match = false;
+
+                // Revisamos si alguno de los valores de las columnas contiene el término de búsqueda
+                columns.forEach(function(column) {
+                    if (column.textContent.toLowerCase().includes(query)) {
+                        match = true;
+                    }
+                });
+
+                // Mostramos u ocultamos la fila dependiendo de si coincide con la búsqueda
+                if (match) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Función para regresar a la página anterior
+        document.getElementById('back_to_home').addEventListener('click', function() {
+            window.history.back();
+        });
+    </script>
+</body>
+</html>
+
+

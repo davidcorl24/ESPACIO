@@ -1,0 +1,50 @@
+{% extends "./plantilla.html" %} <!--Con esto heredamos los archivos de html-->
+{% load static %}
+{% block body %}
+<!DOCTYPE html>
+<div id="lista" class="container">
+    <h1>Listado de Espacios de Estudio</h1>
+    
+    <div class="space">
+        <h2>Laboratorio 1</h2>
+        <p>Laboratorio equipado para prácticas de ciencias y tecnología.</p>
+        <p class="address">Dirección: Edificio de Ciencias, Piso 1</p>
+        <div class="buttons">
+            <a href="listadoReservas/" class="button">Reservar</a>
+            
+        </div>
+    </div>
+
+    <div class="space">
+        <h2>Laboratorio 2</h2>
+        <p>Laboratorio especializado en informática y programación.</p>
+        <p class="address">irección: Edificio de Ciencias, Piso 1</p>
+        <div class="buttons">
+            <a href="listadoReservas/" class="button">Reservar</a>
+            
+        </div>
+    </div>
+
+    <div class="space">
+        <h2>Biblioteca</h2>
+        <p>Un lugar tranquilo con acceso a libros y recursos digitales.</p>
+        <p class="address">Dirección: Bloque A primer piso alado izquierdo</p>
+        <div class="buttons">
+            <a href="listadoReservas/" class="button">Reservar</a>
+            
+        </div>
+    </div>
+
+    <div class="space">
+        <h2>Auditorio</h2>
+        <p>Espacio para conferencias y presentaciones, con capacidad para 200 personas.</p>
+        <p class="address">Dirección: Atras del Bloque B</p>
+        <div class="buttons">
+            <a href="listadoReservas/" class="button">Reservar</a>
+            <a href="detalles/" class="button">ggg</a>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}
+

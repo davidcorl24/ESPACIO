@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendario y Listado de Reservas</title>
+  <!-- FullCalendar CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f7fc;
+      margin: 0;
+      padding: 0;
+      color: #444;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      color: #2c3e50;
+    }
+
+    #calendar {
+      margin: 20px auto;
+      max-width: 90%;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    table thead {
+      background-color: #0984e3;
+      color: white;
+    }
+
+    table th, table td {
+      text-align: left;
+      padding: 12px;
+      border: 1px solid #dfe6e9;
+    }
+
+    table th {
+      font-weight: bold;
+    }
+
+    table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .btn-new {
+      display: block;
+      margin: 20px auto;
+      background-color: #3498db;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .btn-new:hover {
+      background-color: #2980b9;
+    }
+
+    .actions a {
+      margin-right: 5px;
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: white;
+    }
+
+    .btn-edit {
+      background-color: #f39c12;
+    }
+
+    .btn-edit:hover {
+      background-color: #e67e22;
+    }
+
+    .btn-delete {
+      background-color: #e74c3c;
+    }
+
+    .btn-delete:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calendario y Reservas</h1>
+
+  <!-- Calendario -->
+  <div id="calendar"></div>
+
+  <!-- Botón para crear una nueva reserva -->
+  <a href="/nuevaReserva/" class="btn-new"><i class="fas fa-plus"></i> Nueva Reserva</a>
+
+  <!-- Tabla de Reservas -->
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Apellido</th>
+        <th>Espacio</th>
+        <th>Fecha</th>
+        <th>Hora Inicio</th>
+        <th>Hora Fin</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="espacios_table_body">
+      {% for reserva in reservas %}
+      <tr>
+        <td>{{ reserva.id }}</td>
+        <td>{{ reserva.apellido }}</td>
+        <td>{{ reserva.espacio.descripcion }}</td>
+        <td>{{ reserva.fecha }}</td>
+        <td>{{ reserva.horainicio }}</td>
+        <td>{{ reserva.horafin }}</td>
+        <td>
+          <div class="actions">
+            <a href="/editarReserva/{{ reserva.id }}/" class="btn-edit"><i class="fas fa-edit"></i> Editar</a>
+            <a href="/eliminarReserva/{{ reserva.id }}/" class="btn-delete" onclick="return confirm('¿Estás seguro de eliminar esta reserva?');"><i class="fas fa-trash"></i> Eliminar</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- FullCalendar JS -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        events: [
+          {
+            title: 'Gómez - Sala A',
+            start: '2025-01-10T10:00:00',
+            end: '2025-01-10T12:00:00'
+          },
+          {
+            title: 'Pérez - Sala B',
+            start: '2025-01-15T14:00:00',
+            end: '2025-01-15T16:00:00'
+          }
+        ]
+      });
+      calendar.render();
+    });
+  </script>
+</body>
+</html>
+
